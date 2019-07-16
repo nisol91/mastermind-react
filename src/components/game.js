@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import posed from 'react-pose';
+import axios from 'axios';
+import Top from './top';
 
 
 
@@ -16,11 +18,15 @@ const Box = posed.div({
 
 
 
+
 class Game extends Component {
 	constructor(props) {
 		super(props);
 		this.onChangeUserInput = this.onChangeUserInput.bind(this);
+		this.onChangePlayerName = this.onChangePlayerName.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.onSubmit_name = this.onSubmit_name.bind(this);
+
 
 		this.state = {
 			number: [],
@@ -30,6 +36,16 @@ class Game extends Component {
 			ris: '',
 			turno: true,
 			lenght: 3,
+			playerName: '',
+			yourNameShow: false,
+			scores: [
+				{ name: 'nic', time: 222, pts: 34 },
+				{ name: 'nic', time: 222, pts: 34 },
+				{ name: 'nic', time: 222, pts: 34 },
+				{ name: 'nic', time: 222, pts: 34 },
+				{ name: 'nic', time: 222, pts: 34 },
+				{ name: 'nic', time: 222, pts: 34 },
+			]
 		}
 	}
 	componentDidMount() {
@@ -41,6 +57,12 @@ class Game extends Component {
 		this.setState({
 			userInput: e.target.value
 		});
+	}
+	onChangePlayerName(e) {
+		this.setState({
+			playerName: e.target.value
+		});
+		console.log('ok');
 	}
 	resa() {
 		this.setState({
@@ -63,11 +85,40 @@ class Game extends Component {
 		console.log(result);
 
 
+
+		//====posto il vincitore
+
+
+		const obj = {
+			name: this.state.playerName,
+			time: 23,
+			pts: 12
+		};
+		axios.post('http://localhost:4040/player/add', obj)
+			.then(res => console.log(res.data));
+		//
+
 		this.setState({
 			userInput: this.state.userInput,
 			inputShow: true,
 			ris: result,
 			turno: !this.state.turno
+		})
+	}
+	onSubmit_name(e) {
+		// const obj = {
+		// 	name: this.state.playerName,
+		// 	time: 23,
+		// 	pts: 12
+		// };
+		// axios.post('http://localhost:4040/player/add', obj)
+		// 	.then(res => console.log(res.data));
+
+
+		e.preventDefault();
+		this.setState({
+			playerName: this.state.playerName,
+			yourNameShow: true,
 		})
 	}
 	render() {
@@ -81,6 +132,24 @@ class Game extends Component {
 
 			<div className="game">
 				<h1 className="title">Mastermind</h1>
+
+				<form onSubmit={this.onSubmit_name} className="game">
+					<div className="form-group game">
+						<label>Insert your name</label>
+						<input
+							type="text"
+							className="form-control"
+							value={this.state.playerName}
+							onChange={this.onChangePlayerName}
+						/>
+					</div>
+					<div className="form-group">
+						<input type="submit"
+							value="Insert your name"
+							className="btn btn-primary mybtn" />
+					</div>
+				</form>
+				<div className="nome"><Box pose={this.state.yourNameShow ? 'visible' : 'hidden'}>your name: </Box><h3>{this.state.playerName}</h3></div>
 				<div className="diff">
 					<h6>Difficoltà</h6>
 					<div onClick={() => this.setDiff(3)} className="btn btn-primary margin mybtn">3 cifre</div>
@@ -88,7 +157,7 @@ class Game extends Component {
 					<div onClick={() => this.setDiff(5)} className="btn btn-primary margin mybtn">5 cifre</div>
 
 				</div>
-				{this.state.turno ? <div>Tocca a Giocatore 1</div> : <div>Tocca a Giocatore 2</div>}
+				{this.state.turno ? <div>Toccherebbe a Giocatore 1</div> : <div>Toccherebbe a Giocatore 2</div>}
 
 
 				<Box className={NavClasses} pose={this.state.numberShow ? 'visible' : 'hidden'}>
@@ -99,7 +168,6 @@ class Game extends Component {
 
 				<form onSubmit={this.onSubmit} className="game">
 					<div className="form-group game">
-						<label>Person Name:  </label>
 						<input
 							type="text"
 							className="form-control"
@@ -114,6 +182,7 @@ class Game extends Component {
 							className="btn btn-primary mybtn" />
 					</div>
 				</form>
+
 				{this.state.inputShow ? <div>
 					YOU HAVE CHOSEN -> {this.state.userInput}
 					<div>numero giusto posto sbagliato: {this.state.ris[0]}</div>
@@ -122,10 +191,7 @@ class Game extends Component {
 
 				</div> : null}
 				<div onClick={() => this.resa()} className="btn btn-primary mybtn">Arrenditi</div>
-				<div class="top">
-					<h3>Top 10 players</h3>
-
-				</div>
+				<Top data={this.state.scores} />
 			</div>
 		);
 	}
@@ -173,6 +239,7 @@ function compare(arr1, arr2) {
 		}
 		if (count === 3) {
 			console.log('hai vinto');
+
 			return ['', '', winMsg]
 		}
 		// console.log('numero giusto posto sbagliato: ' + giusti);

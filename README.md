@@ -102,6 +102,6 @@ l'applicazione di design pattern.
 
 Manca:
 
--top ten
+-top ten con db mongo
 -test
 -doppio codice per sfida giocatori

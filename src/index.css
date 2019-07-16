@@ -73,12 +73,19 @@ code {
 
 .top {
   width: 100%;
-  height: 300px;
+  height: auto;
   margin: 20px;
   padding: 10px;
+  border-radius: 3px;
   background: grey;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+}
+
+.nome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
