@@ -4,9 +4,6 @@ import Game from './components/game';
 
 
 
-
-
-
 class App extends Component {
   render() {
     return (

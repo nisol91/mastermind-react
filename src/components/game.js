@@ -39,14 +39,6 @@ class Game extends Component {
 			playerName: '',
 			yourNameShow: false,
 			inizio: '',
-			scores: [
-				{ name: 'nic', time: 222, pts: 34 },
-				{ name: 'nic', time: 222, pts: 34 },
-				{ name: 'nic', time: 222, pts: 34 },
-				{ name: 'nic', time: 222, pts: 34 },
-				{ name: 'nic', time: 222, pts: 34 },
-				{ name: 'nic', time: 222, pts: 34 },
-			]
 		}
 	}
 	componentDidMount() {
@@ -142,6 +134,8 @@ class Game extends Component {
 		} else if (this.state.numberShow) {
 			NavClasses += ' show';
 		}
+
+
 		return (
 
 			<div className="game">
@@ -165,13 +159,13 @@ class Game extends Component {
 				</form>
 				<div className="nome"><Box pose={this.state.yourNameShow ? 'visible' : 'hidden'}>your name: </Box><h3>{this.state.playerName}</h3></div>
 				<div className="diff">
-					<h6>Difficoltà</h6>
-					<div onClick={() => this.setDiff(3)} className="btn btn-primary margin mybtn">3 cifre</div>
-					<div onClick={() => this.setDiff(4)} className="btn btn-primary margin mybtn">4 cifre</div>
-					<div onClick={() => this.setDiff(5)} className="btn btn-primary margin mybtn">5 cifre</div>
+					<h6>Difficulty</h6>
+					<div onClick={() => this.setDiff(3)} className="btn btn-primary margin mybtn">3 figures</div>
+					<div onClick={() => this.setDiff(4)} className="btn btn-primary margin mybtn">4 figures</div>
+					<div onClick={() => this.setDiff(5)} className="btn btn-primary margin mybtn">5 figures</div>
 
 				</div>
-				{this.state.turno ? <div>Toccherebbe a Giocatore 1</div> : <div>Toccherebbe a Giocatore 2</div>}
+				{this.state.turno ? <div>Up to Player 1</div> : <div>Up to Player 2</div>}
 
 
 				<Box className={NavClasses} pose={this.state.numberShow ? 'visible' : 'hidden'}>
@@ -192,19 +186,19 @@ class Game extends Component {
 					</div>
 					<div className="form-group">
 						<input type="submit"
-							value="Controlla"
+							value="Check"
 							className="btn btn-primary mybtn" />
 					</div>
 				</form>
 
 				{this.state.inputShow ? <div>
 					YOU HAVE CHOSEN -> {this.state.userInput}
-					<div>numero giusto posto sbagliato: {this.state.ris[0]}</div>
-					<div>numero giusto posto giusto: {this.state.ris[1]}</div>
+					<div>right number wrong place: {this.state.ris[0]}</div>
+					<div>right number right place: {this.state.ris[1]}</div>
 					<div className="secretNumber">{this.state.ris[2]}</div>
 
 				</div> : null}
-				<div onClick={() => this.resa()} className="btn btn-primary mybtn">Arrenditi</div>
+				<div onClick={() => this.resa()} className="btn btn-primary mybtn">Give up and reveal the secret number</div>
 				<Top data={this.state.scores} />
 			</div>
 		);
@@ -231,7 +225,7 @@ function strToArr(str) {
 function compare(arr1, arr2) {
 	console.log(arr2);
 
-	let winMsg = 'Hai vinto!'
+	let winMsg = 'You won!!'
 	let count = 0
 	let giusti = 0
 

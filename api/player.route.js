@@ -1,14 +1,14 @@
 const express = require('express');
 const playerRoutes = express.Router();
 
-// Require  model in our routes module
+// model
 let Player = require('./player.model');
 
 
 //=============CRUD OPERATIONS=============
 
 
-// Defined store route
+// store
 playerRoutes.route('/add').post(function (req, res) {
 	let player = new Player(req.body);
 	player.save()
@@ -20,7 +20,7 @@ playerRoutes.route('/add').post(function (req, res) {
 		});
 });
 
-// Defined get data(index or listing) route
+// get
 playerRoutes.route('/').get(function (req, res) {
 	Player.find(function (err, players) {
 		if (err) {
