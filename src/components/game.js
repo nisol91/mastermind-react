@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import posed from 'react-pose';
+
+
+
+//transizioni
+const Box = posed.div({
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { duration: 4000 }
+	}
+});
 
 
 
@@ -17,12 +29,12 @@ class Game extends Component {
 			userInput: '',
 			ris: '',
 			turno: true,
-			diff: 3
+			lenght: 3,
 		}
 	}
 	componentDidMount() {
 		this.setState({
-			number: randomNum(this.state.diff)
+			number: randomNum(3)
 		});
 	}
 	onChangeUserInput(e) {
@@ -37,8 +49,8 @@ class Game extends Component {
 	}
 	setDiff(n) {
 		this.setState({
-			diff: n,
-			number: randomNum(this.state.diff),
+			number: randomNum(n),
+			lenght: n,
 		})
 	}
 
@@ -50,7 +62,6 @@ class Game extends Component {
 		console.log('risultato: ' + result);
 		console.log(result);
 
-		// this.state.turno = !this.state.turno
 
 		this.setState({
 			userInput: this.state.userInput,
@@ -60,21 +71,31 @@ class Game extends Component {
 		})
 	}
 	render() {
+		let NavClasses = 'secretNumber hidden';
+		if (!this.state.numberShow) {
+			NavClasses += ' hidden';
+		} else if (this.state.numberShow) {
+			NavClasses += ' show';
+		}
 		return (
 
 			<div className="game">
-				<div>
+				<h1 className="title">Mastermind</h1>
+				<div className="diff">
 					<h6>Difficoltà</h6>
-					<div onClick={() => this.setDiff(3)} className="btn btn-primary">3 cifre</div>
-					<div onClick={() => this.setDiff(4)} className="btn btn-primary">4 cifre</div>
-					<div onClick={() => this.setDiff(5)} className="btn btn-primary">5 cifre</div>
+					<div onClick={() => this.setDiff(3)} className="btn btn-primary margin mybtn">3 cifre</div>
+					<div onClick={() => this.setDiff(4)} className="btn btn-primary margin mybtn">4 cifre</div>
+					<div onClick={() => this.setDiff(5)} className="btn btn-primary margin mybtn">5 cifre</div>
 
 				</div>
 				{this.state.turno ? <div>Tocca a Giocatore 1</div> : <div>Tocca a Giocatore 2</div>}
-				{this.state.numberShow ? <div className="secretNumber">
 
+
+				<Box className={NavClasses} pose={this.state.numberShow ? 'visible' : 'hidden'}>
 					Secret Number: {this.state.number}
-				</div> : null}
+				</Box>
+
+
 
 				<form onSubmit={this.onSubmit} className="game">
 					<div className="form-group game">
@@ -84,23 +105,27 @@ class Game extends Component {
 							className="form-control"
 							value={this.state.userInput}
 							onChange={this.onChangeUserInput}
-							maxLength="3"
+							maxLength={this.state.lenght}
 						/>
 					</div>
 					<div className="form-group">
 						<input type="submit"
 							value="Controlla"
-							className="btn btn-primary" />
+							className="btn btn-primary mybtn" />
 					</div>
 				</form>
 				{this.state.inputShow ? <div>
 					YOU HAVE CHOSEN -> {this.state.userInput}
 					<div>numero giusto posto sbagliato: {this.state.ris[0]}</div>
 					<div>numero giusto posto giusto: {this.state.ris[1]}</div>
-					<div>{this.state.ris[2]}</div>
+					<div className="secretNumber">{this.state.ris[2]}</div>
 
 				</div> : null}
-				<div onClick={() => this.resa()} className="btn btn-primary">Arrenditi</div>
+				<div onClick={() => this.resa()} className="btn btn-primary mybtn">Arrenditi</div>
+				<div class="top">
+					<h3>Top 10 players</h3>
+
+				</div>
 			</div>
 		);
 	}

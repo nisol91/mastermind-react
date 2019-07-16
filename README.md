@@ -93,9 +93,15 @@ configurazione: potrei voler regolare la difficoltà del gioco stabilendo di qua
 
 top ten: ad ogni partita il gioco potrebbe darmi un punteggio per la risoluzione, basato sul tempo che ci metto a scoprire una combinazione o sul numero di tentativi che ho a disposizione. Come giocatore vorrei che il programma mi desse la top ten dei giocatori migliori.
 
+Altro:
+l'analisi dei requisiti funzionali
+la qualità del codice
+la chiara separazione delle responsabilità
+la presenza di test automatizzati
+l'applicazione di design pattern.
+
 Manca:
 
--imposta difficolta con unico click e non con doppio
--doppio codice per sfida giocatori
 -top ten
--stile grafico
+-test
+-doppio codice per sfida giocatori
