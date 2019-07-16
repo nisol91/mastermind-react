@@ -6,6 +6,14 @@ In the project directory, you can run:
 
 ### `npm start`
 
+run server
+
+go in api folder:
+
+### `sudo mongod`
+
+### `nodemon server`
+
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -102,6 +110,8 @@ l'applicazione di design pattern.
 
 Manca:
 
--top ten con db mongo
 -test
+
+facoltativo:
+
 -doppio codice per sfida giocatori

@@ -29,7 +29,7 @@ playerRoutes.route('/').get(function (req, res) {
 		else {
 			res.json(players);
 		}
-	});
+	}).sort({ time: 1 }).limit(10);
 });
 
 

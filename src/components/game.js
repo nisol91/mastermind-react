@@ -38,6 +38,7 @@ class Game extends Component {
 			lenght: 3,
 			playerName: '',
 			yourNameShow: false,
+			inizio: '',
 			scores: [
 				{ name: 'nic', time: 222, pts: 34 },
 				{ name: 'nic', time: 222, pts: 34 },
@@ -85,40 +86,53 @@ class Game extends Component {
 		console.log(result);
 
 
+		//calcolo tempo
+		let fine = Date.now()
+		let crono = (fine - this.state.inizio) / 1000
 
-		//====posto il vincitore
+		console.log(crono);
 
-
-		const obj = {
-			name: this.state.playerName,
-			time: 23,
-			pts: 12
-		};
-		axios.post('http://localhost:4040/player/add', obj)
-			.then(res => console.log(res.data));
-		//
-
+		//aggiorno stato
 		this.setState({
 			userInput: this.state.userInput,
 			inputShow: true,
 			ris: result,
-			turno: !this.state.turno
+			turno: !this.state.turno,
 		})
+
+
+		//====posto il vincitore
+
+		if (result[2] !== '') {
+
+			const obj = {
+				name: this.state.playerName,
+				time: crono,
+				pts: crono
+			};
+			axios.post('http://localhost:4040/player/add', obj)
+				.then(res => console.log(res.data));
+		}
+		//====
+
+
 	}
 	onSubmit_name(e) {
-		// const obj = {
-		// 	name: this.state.playerName,
-		// 	time: 23,
-		// 	pts: 12
-		// };
-		// axios.post('http://localhost:4040/player/add', obj)
-		// 	.then(res => console.log(res.data));
+		const data = new Date()
+		const start = `min ${data.getMinutes()} sec ${data.getSeconds()}`
+		console.log(start);
+
+		const inizio = Date.now()
+
+		console.log(inizio);
+
 
 
 		e.preventDefault();
 		this.setState({
 			playerName: this.state.playerName,
 			yourNameShow: true,
+			inizio: inizio
 		})
 	}
 	render() {
@@ -145,7 +159,7 @@ class Game extends Component {
 					</div>
 					<div className="form-group">
 						<input type="submit"
-							value="Insert your name"
+							value="Confirm and start playing"
 							className="btn btn-primary mybtn" />
 					</div>
 				</form>
